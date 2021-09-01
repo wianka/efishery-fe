@@ -4,6 +4,7 @@ import Button from '../../../components/Button';
 import Card from '../../../components/Card';
 
 import Filter from '../Filter';
+import Table from './Table';
 
 import { styWrapperTitle } from './styles';
 
@@ -17,6 +18,9 @@ const ContainerList: FC = () => {
 
             {/* Filter */}
             <Filter />
+
+            {/* Table */}
+            <Table />
         </Card>
     )
 }
