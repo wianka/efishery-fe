@@ -2,16 +2,16 @@ import { css } from 'react-emotion';
 
 const columnWidth = `
     &:nth-child(1) {
-        width: 250px;
+        width: 150px;
     }
     &:nth-child(2) {
-        width: 150px;
+        width: 250px;
     }
     &:nth-child(3) {
-        width: 100px;
+        width: 80px;
     }
     &:nth-child(4) {
-        width: 150px;
+        width: 100px;
     }
 `;
 
@@ -45,6 +45,13 @@ export const styItem = css`
     .col-item {
         font-size: 14px;
         color: #31353BAD;
+        text-transform: capitalize;
         ${columnWidth}
+
+        .loader {
+            background-color: #F3F4F5;
+            height: 25px;
+            border-radius: 8px;
+        }
     }
 `;
