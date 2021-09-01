@@ -1,9 +1,12 @@
 import React, { FC } from 'react';
+import Lists from './Lists';
 
 const Container: FC = () => {
     return (
         <div>
-            ini container;
+            <h3>Harga Perikanan Indonesia</h3>
+
+            <Lists />
         </div>
     )
 }
