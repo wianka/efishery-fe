@@ -50,4 +50,10 @@ export const styWrap = css`
     .content__children {
         margin-top: 16px;
     }
+
+    @media (max-width: 425px), (max-width: 768px) {
+        .modal__content {
+            width: calc(100% - 20px);
+        }
+    }
 `;

@@ -17,3 +17,12 @@ export interface ItemValuesReadInterfaces {
     size: string;
     price: string;
 }
+
+export interface SizeListInterface {
+    size: string;
+}
+
+export interface DaerahListInterface {
+    city?: string;
+    province?: string;
+}

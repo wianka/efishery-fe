@@ -5,7 +5,7 @@ import Lists from './Lists';
 const Container: FC = () => {
     return (
         <div>
-            <h3>Harga Perikanan Indonesia</h3>
+            <h5>Harga Perikanan Indonesia</h5>
 
             <FilterProvider>
                 <Lists />

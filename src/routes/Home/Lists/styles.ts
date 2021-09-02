@@ -6,7 +6,8 @@ export const styWrapperTitle = css`
     justify-content: space-between;
     margin-bottom: 24px;
 
-    h4 {
+    h6 {
         margin: 0;
+        font-weight: bold;
     }
 `;
