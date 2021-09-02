@@ -109,7 +109,7 @@ const ContainerList: FC = () => {
             </div>
 
             {/* Filter */}
-            <Filter />
+            <Filter dataSizes={dataSizes} dataDaerah={dataDaerah} />
 
             {/* Table */}
             <Table listData={data} isLoading={isLoading} hasNext={hasNext} />

@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from "react";
+import React, { useCallback, useRef } from "react";
 import ItemCard from './ItemCard';
 import { useFilterContext } from '../../context/FIlterContext';
 import { ItemValuesInterfaces } from '../interfaces/item';
@@ -14,7 +14,7 @@ interface Props {
 function TableContainer ({ listData, isLoading, hasNext }: Props) {
     const { setPagination } = useFilterContext();
     const observer = useRef<null | IntersectionObserver>(null);
-    const [isNext, setIsNext] = useState<boolean>(true);
+
 
     const lastElementRef = useCallback(node => {
         if (isLoading) return
@@ -23,7 +23,6 @@ function TableContainer ({ listData, isLoading, hasNext }: Props) {
         observer.current = new IntersectionObserver(entries => {
           if (entries[0]?.isIntersecting && hasNext) {
                 setPagination();
-                setIsNext(true);
           }
         })
     
@@ -74,7 +73,7 @@ function TableContainer ({ listData, isLoading, hasNext }: Props) {
             </div>
 
             <div className={styBody}>
-                {!isLoading && Boolean(listData.length) && renderItemCard()}
+                {Boolean(listData.length) && renderItemCard()}
                 {!isLoading && Boolean(!listData.length) && renderEmptyResult()}
                 {isLoading && <LoaderItem />}
             </div>

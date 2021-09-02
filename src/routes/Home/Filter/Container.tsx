@@ -1,11 +1,18 @@
 import React, { FC, useState, useCallback } from "react";
 import { useFilterContext } from '../context/FIlterContext';
+import { SizeListInterface, DaerahListInterface } from '../Lists/interfaces/item';
+
 import Button from "../../../components/Button";
 import DaerahFilter from './DaerahFilter';
 import SizesFilter from './SizesFilter';
 import { styWrapFilter } from './styles';
 
-const Filter: FC = () => {
+interface Props {
+    dataSizes: SizeListInterface[];
+    dataDaerah: DaerahListInterface[];
+}
+
+const Filter: FC<Props> = ({ dataSizes, dataDaerah }) => {
     const { setSearchValue, resetFilter } = useFilterContext();
     const [valueSearch, setValueSearch] = useState<string>('');
 
@@ -39,9 +46,9 @@ const Filter: FC = () => {
                 <Button primary onClick={handleOnClickButton}>Cari</Button>
             </div>
 
-            <DaerahFilter />
+            <DaerahFilter dataDaerah={dataDaerah} />
 
-            <SizesFilter />
+            <SizesFilter dataSizes={dataSizes} />
 
             <div className="wrapper-reset">
                 <Button onClick={handleResetFilter} secondary>Reset Filter</Button>
