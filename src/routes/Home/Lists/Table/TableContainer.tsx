@@ -1,59 +1,40 @@
-import React, { FC, useCallback, useEffect, useState, useRef } from "react";
+import React, { useCallback, useRef, useState } from "react";
 import ItemCard from './ItemCard';
+import { useFilterContext } from '../../context/FIlterContext';
 import { ItemValuesInterfaces } from '../interfaces/item';
 import LoaderItem from './LoaderItem';
 import { styHeader, styBody } from './styles';
 
-const TableContainer: FC = () => {
+interface Props {
+    listData: ItemValuesInterfaces[];
+    isLoading?: boolean;
+    hasNext?: boolean;
+}
+
+function TableContainer ({ listData, isLoading, hasNext }: Props) {
+    const { setPagination } = useFilterContext();
     const observer = useRef<null | IntersectionObserver>(null);
-    const pagination = useRef(-1);
-    const [data, setData] = useState<Array<ItemValuesInterfaces>>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
-
-    const getList = useCallback(async () => {
-        pagination.current += 1;
-        setIsLoading(true);
-        const result = await fetch(`https://stein.efishery.com/v1/storages/5e1edf521073e315924ceab4/list?limit=${20}&offset=${pagination.current}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        }).then(resp => resp.json()).then(result => {
-            setIsLoading(false);
-            setData(prev => {
-                if (prev.length > 0) {
-                    return [...prev, ...result];
-                }
-
-                return result;
-            });
-        })
-
-        return result;
-    }, []);
-
-    useEffect(() => {
-        getList();
-    }, [getList]);
+    const [isNext, setIsNext] = useState<boolean>(true);
 
     const lastElementRef = useCallback(node => {
         if (isLoading) return
     
         if (observer.current) observer.current.disconnect();
         observer.current = new IntersectionObserver(entries => {
-          if (entries[0]?.isIntersecting) {
-              getList();
+          if (entries[0]?.isIntersecting && hasNext) {
+                setPagination();
+                setIsNext(true);
           }
         })
     
         if (node) observer.current.observe(node);
-    }, [getList, isLoading]);
+    }, [hasNext, isLoading, setPagination]);
 
     const renderItemCard = () => {
-        if (data.length > 0) {
-            return data.map((item, key) => {
+        if (listData.length > 0) {
+            return listData.map((item, key) => {
                 let refProps = {};
-                if (key + 1 === data.length) {
+                if (key + 1 === listData.length) {
                     refProps = {
                         'data-testid': 'baba', 
                         ref: lastElementRef,
@@ -73,8 +54,14 @@ const TableContainer: FC = () => {
                 )
             })
         }
+    }
 
-        return null;
+    const renderEmptyResult = () => {
+        return (
+            <div className="empty-result">
+                <h5>Hasil pencarian tidak ditemukan</h5>
+            </div>
+        )
     }
 
     return (
@@ -87,7 +74,8 @@ const TableContainer: FC = () => {
             </div>
 
             <div className={styBody}>
-                {renderItemCard()}
+                {!isLoading && Boolean(listData.length) && renderItemCard()}
+                {!isLoading && Boolean(!listData.length) && renderEmptyResult()}
                 {isLoading && <LoaderItem />}
             </div>
         </div>

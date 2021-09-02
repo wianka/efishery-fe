@@ -33,6 +33,12 @@ export const styHeader = css`
 
 export const styBody = css`
     padding: 12px 0 0;
+
+    .empty-result {
+        h5 {
+            text-align: center;
+        }
+    }
 `;
 
 export const styItem = css`

@@ -1,4 +1,5 @@
 import React, { FC } from 'react';
+import FilterProvider from './context/FIlterContext';
 import Lists from './Lists';
 
 const Container: FC = () => {
@@ -6,7 +7,9 @@ const Container: FC = () => {
         <div>
             <h3>Harga Perikanan Indonesia</h3>
 
-            <Lists />
+            <FilterProvider>
+                <Lists />
+            </FilterProvider>
         </div>
     )
 }
