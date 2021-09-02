@@ -5,6 +5,7 @@ import { useFilterContext } from '../context/FIlterContext';
 
 import Button from '../../../components/Button';
 import Card from '../../../components/Card';
+import Modal from '../../../components/Modal';
 
 import Filter from '../Filter';
 import Table from './Table';
@@ -17,6 +18,7 @@ const ContainerList: FC = () => {
     const [data, setData] = useState<Array<ItemValuesInterfaces>>([]);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [hasNext, setHasNext] = useState<boolean>(false);
+    const [showModal, setShowModal] = useState<boolean>(false);
 
     const getList = useCallback(async () => {
         setIsLoading(true);
@@ -59,11 +61,19 @@ const ContainerList: FC = () => {
         getList();
     }, [getList]);
 
+    const handleClickAdd = () => {
+        setShowModal(true);
+    }
+
+    const handleCloseAdd = () => {
+        setShowModal(false);
+    }
+
     return (
         <Card>
             <div className={styWrapperTitle}>
-                <h4>List Harga</h4>
-                <Button primary>Tambah Harga</Button>
+                <h4>Daftar Harga</h4>
+                <Button primary onClick={handleClickAdd}>Tambah List Ikan</Button>
             </div>
 
             {/* Filter */}
@@ -71,6 +81,10 @@ const ContainerList: FC = () => {
 
             {/* Table */}
             <Table listData={data} isLoading={isLoading} hasNext={hasNext} />
+
+            <Modal title="Tambah List Ikan" onClose={handleCloseAdd} display={showModal}>
+                ini content modal
+            </Modal>
         </Card>
     )
 }
